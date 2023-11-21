@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template
 from multiprocessing import Process
 import threading
+import os
 import time
+import shutil
 from send_feishu import get_token, get_app_token, get_user_login, refresh_access_token
 import configparser
 from tools.data_model import create_client
@@ -66,8 +68,16 @@ def get_post_data():
 def pull_app():
     # return "欢迎进入小程序后台"
     # https://github.com/wxjbnu/hot-python.git
-    pull_code('master', 'https://github.com/wxjbnu/hot-python.git')
-    return {"msg": "sssss"}
+    pull_code('main', 'https://github.com/wxjbnu/hot-python.git')
+
+    source_folder = 'tmp'
+    dest_folder = ''
+    for file_name in os.listdir(source_folder):
+        source = os.path.join(source_folder, file_name)
+        destination = os.path.join(dest_folder, file_name)
+        shutil.move(source, destination)
+
+    return {"msg": "success"}
 
 # 定义一个路由和视图函数
 @app.route('/login')
