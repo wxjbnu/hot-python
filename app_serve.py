@@ -47,10 +47,16 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/version')
+def version():
+    return {"version": "2023-11-21:1"}
+
+
 @app.route('/ooo')
 def ooo():
     # return "欢迎进入小程序后台"
     return {"msg": "sssss"}
+
 
 @app.route('/local/data', methods=['POST'])
 def get_post_data():
