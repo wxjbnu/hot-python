@@ -52,17 +52,6 @@ def ooo():
     # return "欢迎进入小程序后台"
     return {"msg": "sssss"}
 
-
-@app.route('/ddd')
-def ddd():
-    return {"msg": "123123123123"}
-
-
-@app.route('/kkk')
-def kkk():
-    return {"msg": "kkkkkkkkk"}
-
-
 @app.route('/local/data', methods=['POST'])
 def get_post_data():
     data = request.get_json()  # 获取JSON数据
