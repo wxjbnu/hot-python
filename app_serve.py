@@ -51,6 +51,9 @@ def ooo():
     # return "欢迎进入小程序后台"
     return {"msg": "sssss"}
 
+@app.route('/ddd')
+def ddd():
+    return {"msg": "123123123123"}
 
 @app.route('/local/data', methods=['POST'])
 def get_post_data():
