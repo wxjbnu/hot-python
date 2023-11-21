@@ -10,6 +10,7 @@ from tools.data_model import create_client
 from qt_data.plot_fn import PlotMain
 from tools.score_for_google_index import gen_plot_data
 from tools.utils import pull_code
+import subprocess
 
 
 def save_user(result):
@@ -51,13 +52,16 @@ def ooo():
     # return "欢迎进入小程序后台"
     return {"msg": "sssss"}
 
+
 @app.route('/ddd')
 def ddd():
     return {"msg": "123123123123"}
 
+
 @app.route('/kkk')
 def kkk():
     return {"msg": "kkkkkkkkk"}
+
 
 @app.route('/local/data', methods=['POST'])
 def get_post_data():
@@ -80,11 +84,15 @@ def pull_app():
     source_folder = 'tmp'
     dest_folder = ''
     for file_name in os.listdir(source_folder):
-        source = os.path.join(source_folder, file_name)
-        destination = os.path.join(dest_folder, file_name)
-        shutil.move(source, destination)
+        if not file_name.startswith('.'):
+            source = os.path.join(source_folder, file_name)
+            destination = os.path.join(dest_folder, file_name)
+            shutil.move(source, destination)
+
+    subprocess.run(["sh", "app_restart.sh"])
 
     return {"msg": "success"}
+
 
 # 定义一个路由和视图函数
 @app.route('/login')
