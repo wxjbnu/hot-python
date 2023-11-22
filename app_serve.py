@@ -70,6 +70,16 @@ def get_post_data():
     return {"message": f'Successfully received data!:type:{type(data)},data:{data}', "data": plot_image.image_base64}
 
 
+@app.route('/local/chart', methods=['POST'])
+def get_post_chart():
+    data = request.get_json()  # 获取JSON数据
+
+    keywords = '"red light therapy" "hair"'
+    resp = gen_plot_data([keywords])
+
+    return {"message": f'Successfully received data!:type:{type(data)},data:{data}', "data": resp}
+
+
 @app.route('/pull')
 def pull_app():
     # return "欢迎进入小程序后台"
