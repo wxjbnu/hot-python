@@ -1,10 +1,11 @@
 from flask import Flask, request, render_template
 from multiprocessing import Process
+import requests
 import threading
 import os
 import time
 import shutil
-from send_feishu import get_token, get_app_token, get_user_login, refresh_access_token
+from send_feishu import get_token, get_app_token, get_user_login, refresh_access_token, query_feishu_sheet_value
 from tools.utils import get_sheet_token_id, get_dict_by_dot
 
 import configparser
@@ -13,6 +14,8 @@ from qt_data.plot_fn import PlotMain
 from tools.score_for_google_index import gen_plot_data
 from tools.utils import pull_code
 import subprocess
+
+
 
 
 def save_user(result):
@@ -51,7 +54,8 @@ def index():
 
 @app.route('/version')
 def version():
-    return {"version": "2023-11-23:1"}
+    resp = query_feishu_sheet_value()
+    return {"version": resp['data']['valueRange']['values'][0][0]}
 
 
 @app.route('/ooo')
