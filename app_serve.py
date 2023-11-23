@@ -99,7 +99,7 @@ def get_post_chart():
     return {"message": f'Successfully received data!:type:{type(data)},data:{data}', "data": resp}
 
 @app.route('/local/sheet_list', methods=['GET'])
-def query_sheet_list()
+def query_sheet_list():
     start_index = 0
     sheet_token = request.args.get('sheet_token')
     sheet_list_info = get_sheet_info(sheet_token, start_index)
