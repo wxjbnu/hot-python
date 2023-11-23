@@ -51,7 +51,7 @@ def index():
 
 @app.route('/version')
 def version():
-    return {"version": "2023-11-21:1"}
+    return {"version": "2023-11-23:1"}
 
 
 @app.route('/ooo')
