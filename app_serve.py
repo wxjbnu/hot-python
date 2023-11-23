@@ -5,6 +5,8 @@ import os
 import time
 import shutil
 from send_feishu import get_token, get_app_token, get_user_login, refresh_access_token
+from tools.utils import get_sheet_token_id, get_dict_by_dot
+
 import configparser
 from tools.data_model import create_client
 from qt_data.plot_fn import PlotMain
@@ -73,11 +75,31 @@ def get_post_data():
 @app.route('/local/chart', methods=['POST'])
 def get_post_chart():
     data = request.get_json()  # 获取JSON数据
-
-    keywords = '"red light therapy" "hair"'
+    uri = data['uri']
+    keywords = data['keywords']
+    col = data['col']
+    # keywords = '"red light therapy" "hair"'
     resp = gen_plot_data([keywords])
 
+    sheet_token_key, sheet_id_key = get_sheet_token_id(uri)
+    print('sheet_token_key, sheet_id_key', sheet_token_key, sheet_id_key)
+
+    sheet_token_key = 'KmjzssTC2hzenct8pJKcfDxwnhs'
+    start_index = 0
+    sheet_list = ['b1c868']
+    demographics_keywords_arr, sheet_id_list = get_feishu_score_keywords(sheet_token=sheet_token_key,
+                                                                         start_index=0,
+                                                                         start_col=1,
+                                                                         sheet_list=sheet_list)
+
     return {"message": f'Successfully received data!:type:{type(data)},data:{data}', "data": resp}
+
+@app.route('/local/sheet_list', methods=['GET'])
+def query_sheet_list()
+    start_index = 0
+    sheet_token = request.args.get('sheet_token')
+    sheet_list_info = get_sheet_info(sheet_token, start_index)
+    return {"message": '', "data": sheet_list_info}
 
 
 @app.route('/pull')
